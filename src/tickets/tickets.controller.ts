@@ -3,7 +3,7 @@ import { Company } from '../../db/models/Company';
 import { Ticket, TicketStatus, TicketType } from '../../db/models/Ticket';
 import { User, UserRole } from '../../db/models/User';
 
-@Controller('tickets')
+@Controller('api/v1/tickets')
 export class TicketsController {
   @Get()
   async findAll() {

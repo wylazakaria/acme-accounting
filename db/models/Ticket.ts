@@ -18,6 +18,12 @@ export enum TicketType {
   registrationAddressChange = 'registrationAddressChange',
 }
 
+export enum TicketCategory {
+  accounting = 'accounting',
+  corporate = 'registrationAddressChange',
+  management = 'management',
+}
+
 @Table({ tableName: 'tickets' })
 export class Ticket extends Model {
   @Column
@@ -25,6 +31,9 @@ export class Ticket extends Model {
 
   @Column
   status: TicketStatus;
+
+  @Column
+  category: TicketCategory;
 
   @ForeignKey(() => Company)
   companyId: number;
