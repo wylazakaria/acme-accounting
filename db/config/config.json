@@ -1,0 +1,26 @@
+{
+  "development": {
+    "dialect": "postgres",
+    "host": "localhost",
+    "port": 5490,
+    "username": "user",
+    "password": "password",
+    "database": "osome"
+  },
+  "test": {
+    "dialect": "postgres",
+    "host": "localhost",
+    "port": 5490,
+    "username": "user",
+    "password": "password",
+    "database": "osome"
+  },
+  "production": {
+    "dialect": "postgres",
+    "host": "localhost",
+    "port": 5490,
+    "username": "user",
+    "password": "password",
+    "database": "osome"
+  }
+}
