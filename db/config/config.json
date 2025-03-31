@@ -13,7 +13,7 @@
     "port": 5490,
     "username": "user",
     "password": "password",
-    "database": "osome"
+    "database": "osome-test"
   },
   "production": {
     "dialect": "postgres",

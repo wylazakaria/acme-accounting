@@ -7,11 +7,14 @@ import { User } from '../db/models/User';
 import dbConfig from '../db/config/config.json';
 
 const devConfig = dbConfig.development as SequelizeModuleOptions;
+const testConfig = dbConfig.test as SequelizeModuleOptions;
+
+const config = process.env.NODE_ENV === 'development' ? devConfig : testConfig;
 
 @Module({
   imports: [
     SequelizeModule.forRoot({
-      ...devConfig,
+      ...config,
       models: [Company, User, Ticket],
     }),
   ],
