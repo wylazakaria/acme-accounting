@@ -9,7 +9,7 @@ import { Company } from './Company';
 
 export enum UserRole {
   accountant = 'accountant',
-  manager = 'manager',
+  corporateSecretary = 'corporateSecretary',
 }
 
 @Table({ tableName: 'users' })
