@@ -14,13 +14,5 @@
     "username": "user",
     "password": "password",
     "database": "osome-test"
-  },
-  "production": {
-    "dialect": "postgres",
-    "host": "localhost",
-    "port": 5490,
-    "username": "user",
-    "password": "password",
-    "database": "osome"
   }
 }
