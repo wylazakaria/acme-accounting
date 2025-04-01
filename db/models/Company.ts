@@ -1,11 +1,31 @@
-import { Table, Column, Model, HasMany } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  HasMany,
+  PrimaryKey,
+  AutoIncrement,
+} from 'sequelize-typescript';
 import { User } from './User';
 
-@Table({ tableName: 'companies' })
-export class Company extends Model {
-  @Column
+interface CompanyCreateProperties {
   name: string;
+}
+
+interface CompanyProperties extends CompanyCreateProperties {
+  id: number;
+}
+
+@Table({ tableName: 'companies' })
+export class Company extends Model<CompanyProperties, CompanyCreateProperties> {
+  @AutoIncrement
+  @PrimaryKey
+  @Column
+  declare id: number;
+
+  @Column
+  declare name: string;
 
   @HasMany(() => User)
-  users: User[];
+  declare users: User[];
 }

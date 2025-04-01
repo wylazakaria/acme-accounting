@@ -4,6 +4,8 @@ import {
   Model,
   BelongsTo,
   ForeignKey,
+  PrimaryKey,
+  AutoIncrement,
 } from 'sequelize-typescript';
 import { Company } from './Company';
 import { User } from './User';
@@ -26,20 +28,25 @@ export enum TicketCategory {
 
 @Table({ tableName: 'tickets' })
 export class Ticket extends Model {
+  @AutoIncrement
+  @PrimaryKey
   @Column
-  type: TicketType;
+  declare id: number;
 
   @Column
-  status: TicketStatus;
+  declare type: TicketType;
 
   @Column
-  category: TicketCategory;
+  declare status: TicketStatus;
+
+  @Column
+  declare category: TicketCategory;
 
   @ForeignKey(() => Company)
-  companyId: number;
+  declare companyId: number;
 
   @ForeignKey(() => User)
-  assigneeId: number;
+  declare assigneeId: number;
 
   @BelongsTo(() => Company)
   company: Company;

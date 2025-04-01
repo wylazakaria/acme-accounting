@@ -4,6 +4,8 @@ import {
   Model,
   BelongsTo,
   ForeignKey,
+  PrimaryKey,
+  AutoIncrement,
 } from 'sequelize-typescript';
 import { Company } from './Company';
 
@@ -14,14 +16,19 @@ export enum UserRole {
 
 @Table({ tableName: 'users' })
 export class User extends Model {
+  @AutoIncrement
+  @PrimaryKey
   @Column
-  name: string;
+  declare id: number;
 
   @Column
-  role: UserRole;
+  declare name: string;
+
+  @Column
+  declare role: UserRole;
 
   @ForeignKey(() => Company)
-  companyId: number;
+  declare companyId: number;
 
   @BelongsTo(() => Company)
   company: Company;

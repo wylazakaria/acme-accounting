@@ -13,6 +13,15 @@ interface newTicketDto {
   companyId: number;
 }
 
+interface TicketDto {
+  id: number;
+  type: TicketType;
+  companyId: number;
+  assigneeId: number;
+  status: TicketStatus;
+  category: TicketCategory;
+}
+
 @Controller('api/v1/tickets')
 export class TicketsController {
   @Get()
@@ -50,12 +59,23 @@ export class TicketsController {
 
     const assignee = assignees[0];
 
-    await Ticket.create({
+    const ticket = await Ticket.create({
       companyId,
       assigneeId: assignee.id,
       category,
       type,
       status: TicketStatus.open,
     });
+
+    const ticketDto: TicketDto = {
+      id: ticket.id,
+      type: ticket.type,
+      assigneeId: ticket.assigneeId,
+      status: ticket.status,
+      category: ticket.category,
+      companyId: ticket.companyId,
+    };
+
+    return ticketDto;
   }
 }
