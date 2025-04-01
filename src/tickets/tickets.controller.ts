@@ -38,9 +38,10 @@ export class TicketsController {
         ? TicketCategory.accounting
         : TicketCategory.corporate;
 
-    const userRole = TicketType.managementReport
-      ? UserRole.accountant
-      : UserRole.corporateSecretary;
+    const userRole =
+      type === TicketType.managementReport
+        ? UserRole.accountant
+        : UserRole.corporateSecretary;
 
     const assignees = await User.findAll({
       where: { companyId, role: userRole },
@@ -52,7 +53,7 @@ export class TicketsController {
         `Cannot find user with role ${userRole} to create a ticket`,
       );
 
-    if (userRole === UserRole.corporateSecretary)
+    if (userRole === UserRole.corporateSecretary && assignees.length > 1)
       throw new ConflictException(
         `Multiple users with role ${userRole}. Cannot create a ticket`,
       );
