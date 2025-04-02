@@ -2,17 +2,17 @@
   "development": {
     "dialect": "postgres",
     "host": "localhost",
-    "port": 5490,
+    "port": 5590,
     "username": "user",
     "password": "password",
-    "database": "osome"
+    "database": "task-dev"
   },
   "test": {
     "dialect": "postgres",
     "host": "localhost",
-    "port": 5490,
+    "port": 5590,
     "username": "user",
     "password": "password",
-    "database": "osome-test"
+    "database": "task-test"
   }
 }
