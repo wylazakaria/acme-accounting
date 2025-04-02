@@ -53,7 +53,7 @@ $ nvm use
 $ npm install
 ```
 
-2. Run the DB
+2. Run the DB container
 ```sh
 docker-compose up -d
 ```
@@ -69,3 +69,24 @@ npm start
 ```
 
 5. Go to http://localhost:3000/api/v1/tickets 🍾
+
+# Testing
+1.Run the DB container (if you did not before)
+```sh
+docker-compose up -d
+```
+
+2.Create a db
+```sh
+npm run db:create:test
+```
+
+3. Run migrations
+```sh
+npm run db:migrate:test
+```
+
+4. Test
+```sh
+npm test
+```
