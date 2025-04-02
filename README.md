@@ -71,12 +71,12 @@ npm start
 5. Go to http://localhost:3000/api/v1/tickets 🍾
 
 # Testing
-1.Run the DB container (if you did not before)
+1. Run the DB container (if you did not before)
 ```sh
 docker-compose up -d
 ```
 
-2.Create a db
+2. Create a db
 ```sh
 npm run db:create:test
 ```
