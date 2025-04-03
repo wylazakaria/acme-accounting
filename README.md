@@ -1,14 +1,30 @@
-# The task
+# ACME ACCOUNTING
 
-We have an existing project with working code. Your task is to run it and make a few changes to it.
+Welcome to ACME acounting, this codebase serves as a way for you to
+know how we at OSOME work and how you work through challenges while
+adopting an existing codebase.
 
-### Given
+---
 
-We have **companies**, companies have **users**.
+There are 5 tasks that you need to do to complete this task, at least
+3 tasks must be done for you to move forward.
 
-Every user has a **role**, which defines what this user does in the company. There might be multiple users with the same role.
+You are allowed to refactor as much as you want. However, Be mindful 
+of your time.
 
-We create and assign **tickets** to users.
+If there are any issues, contact your hiring representative and they 
+will clarify it with you.
+
+If you want to use AI/LLM, **DISCLOSE** where and how you used it.
+
+## Context
+
+We have `companies`, companies have `users`.
+
+Every user has a `role`, which defines what this user does in the 
+company. There might be multiple users with the same role.
+
+We create and assign `tickets` to users.
 
 Every ticket has
 1. Type - defines the work that should be done by the user
@@ -16,77 +32,113 @@ Every ticket has
 3. Category - every type is under a particular category
 4. Status: open or resolved
 
-**We have 2 endpoints:**
+**Endpoints**
 
-`GET api/v1/tickets` - returns all tickets in the system. Without pagination. This is only for creating logic testing, you can ignore its code.
+- `GET api/v1/tickets` - returns all tickets in the system. Without 
+                         pagination. This is only for creating logic 
+                         testing.
+- `POST api/v1/tickets` - creates a ticket. It accepts type and `companyId`
 
-`POST api/v1/tickets` - creates a ticket. It accepts type and companyId
+**Ticket Creation Rules**
 
-**Ticket creation logic:**
+If a ticket type is `managementReport`, then the ticket category 
+should be `accounting`. The assignee is a user with the role = `Accountant`. 
+If there are multiple accountants in the company, 
+take the most recently created one.
 
-If a ticket type is ‘managementReport’, then the ticket category should be ‘accounting’. The assignee is a user with the role = ‘Accountant’. If there are multiple accountants in the company, take the most recently created one.
-
-If a ticket type is ‘registrationAddressChange’, then the ticket category should be ‘Corporate’. Assignee is a user with the role ‘Corporate secretary’. If there are multiple secretaries, throw an error.
+If a ticket type is `registrationAddressChange`, then the ticket category 
+should be `Corporate`. Assignee is a user with the role `Corporate secretary`. 
+If there are multiple secretaries, throw an error.
 
 If we cannot find an assignee with the required role, throw an error.
 
-### TO DO
+## Tasks
 
-**Task 1.** If we create a registrationAddressChange ticket, but the company already has a ticket with this type, throw a duplication error
+### 1. Setup
 
-**Task 2.** Add a new user role = Director. If we create a registrationAddressChange ticket and we cannot find a secretary, assign it to the Director. If there are multiple directors, throw an error.
+This directory is not set up properly. Explore the code base and create
+a mental model of where things are. Based on your expertise with node.js,
+Set up the codebase based on industry standard conventions.
 
-**Task 3.** Add a new ticket type:
+**Instructions**
 
-- type = strikeOff
-- Category = ‘Management’
-- Assignee = ‘Director’. If there are multiple directors, throw an error.
-- Additional side effect: Resolve all other active tickets in this company (we do not need them anymore as we are closing down the company).
+1. Modify the codebase so that it starts.
 
-**Note! Do not be afraid to refactor the code. It is deliberately far from perfect 😅**
+**Acceptance**
 
-# Project setup and run
+1. Service should run when you use `npm run dev`.
+2. Once everything is set up, you should be able to receive `{ "OK": true }` 
+   when you access http://localhost:1337/healthcheck.
+3. Commit the changes that allowed #2 to work and create a PR for the 
+   changes in YOUR OWN repository.
 
-1. NPM
-```sh
-$ nvm use
-$ npm install
-```
+### 2. Behaviour
 
-2. Run the DB container
-```sh
-docker-compose up -d
-```
+This service is old, new business requirements have come in and it
+requires us to change the internals of the service.
 
-3. Run migrations
-```sh
-npm run db:migrate
-```
+Let's start with fixing the behaviour of the service.
 
-4. Start the server
-```sh
-npm start
-```
+**Instructions**
 
-5. Go to http://localhost:3000/api/v1/tickets 🍾
+1. When creating a `registrationAddressChange` ticket, if the company 
+   already has a ticket with this type, throw a duplication error.
+2. Add a new `Director` user. If we create a `registrationAddressChange`
+   ticket and we cannot find a secretary, assign it to the `Director`. 
+   If there are multiple directors, throw an error.
 
-# Testing
-1. Run the DB container (if you did not before)
-```sh
-docker-compose up -d
-```
+**Acceptance**
 
-2. Create a db
-```sh
-npm run db:create:test
-```
+1. Each task should have an accompanying test
+2. Commit the changes and create a PR for the changes in YOUR OWN 
+   repository.
 
-3. Run migrations
-```sh
-npm run db:migrate:test
-```
+### 3. Schema
 
-4. Test
-```sh
-npm test
-```
+It seems that companies are closing down more than usual, we never considered
+this case before. Maybe it's time to add another type of ticket.
+
+**Instructions**
+
+1. Create New Ticket Type
+   ```
+   {
+       "type": "strikeOff",
+       "Category": "Management",
+       "Assignee": "Director"
+   }
+   ```
+
+**Side Effects**
+- If there are multiple directors, throw an error.
+- Resolve all other active tickets in this company (we do not need 
+  them anymore as we are closing down the company).
+
+**Acceptance**
+
+1. The ticket type should be usable by other engineers when setting up
+   this service.
+2. Accompanying tests should be available to accomodate the side effects.
+3. Commit the changes and create a PR for the changes in YOUR OWN
+   repository.
+
+### 4. Optimize
+
+While the server is running, run `npm run load` to start an automated data loading process.
+
+Optimize the processing so that the time it takes to load the documents are marginally faster.
+
+Process 2000000 records
+
+### 5. Interaction
+
+Create a form that can create new tickets
+
+## Stretch Tasks
+
+There are common principles in the repository that are intentionally 
+left out and not covered by the base tasks given above. These are common 
+best-practice tasks that you can make in any node project. 
+
+Doing more than what is given above will be plus points and will be
+considered in our code review session.
