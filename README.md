@@ -6,7 +6,7 @@ adopting an existing codebase.
 
 ---
 
-There are 5 tasks that you need to do to complete this task, all 5 
+There are 4 tasks that you need to do to complete this task, all 4 
 tasks must be done for you to move forward.
 
 Keep this whole exercise within 1 hour of your time. You are allowed
@@ -153,40 +153,6 @@ time to get the results. Maybe this is a good time to refactor the code.
    to check the status of the processing.
 3. Metrics should be recorded for discussion.
 4. Commit the changes and create a PR for the changes in YOUR OWN
-   repository.
-
-### 5. Interaction
-
-It seems it is hard for agents in ACME to keep track of changes within
-a company itself. They need a way to keep context as long as the company
-is being managed by ACME.
-
-Perhaps if we can add a way for agents to take notes, it would be easier
-for them to keep track of changes.
-
-**Instruction**
-
-1. Create a new endpoint that allows agents to add notes to a company.
-2. The endpoint should accept the following:
-   ```
-   {
-       "companyId": 123,
-       "note": "This is a note",
-       "createdBy": "userId",
-       "createdAt": "2023-10-01T00:00:00Z"
-   }
-   ```
-3. Create a new form that allows agents to add notes to a company.
-4. Create a new page that allows agents to view all notes for a company.
-
-**Acceptance**
-
-1. The endpoint should be able to accept the request and store the note
-   in the database safely.
-2. The UI should have some sort of validation.
-3. The UI should be able to prevent abuse.
-4. Include the HTTP requests you used to test in the code base.
-5. Commit the changes and create a PR for the changes in YOUR OWN
    repository.
 
 ## Stretch Tasks
