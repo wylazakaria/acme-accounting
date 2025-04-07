@@ -89,7 +89,7 @@ Let's start with fixing the behaviour of the service.
 
 **Acceptance**
 
-1. Each task should have an accompanying test
+1. Each requirement should have an accompanying test
 2. Commit the changes and create a PR for the changes in YOUR OWN 
    repository.
 
@@ -118,21 +118,67 @@ this case before. Maybe it's time to add another type of ticket.
 
 1. The ticket type should be usable by other engineers when setting up
    this service.
-2. Accompanying tests should be available to accomodate the side effects.
+2. Accompanying tests should be available to accommodate the side effects.
 3. Commit the changes and create a PR for the changes in YOUR OWN
    repository.
 
 ### 4. Optimize
 
-While the server is running, run `npm run load` to start an automated data loading process.
+ACME processes tons of data every day. It is essential for us that we
+make sure that our internal processes and data are provided accurately
+and on time.
 
-Optimize the processing so that the time it takes to load the documents are marginally faster.
+We have a legacy service that processes data for us, but it takes a long
+time to get the results. Maybe this is a good time to refactor the code.
 
-Process 2000000 records
+**Instructions**
+
+1. Optimize the endpoint so that the time it takes to finish an action
+   is marginally faster.
+2. The endpoint should not hold the connection of the client while processing
+   the data in the background.
+
+**Acceptance**
+
+1. The endpoint should be respond faster than the existing implementation
+2. Documents should process in the background and the client should be able
+   to check the status of the processing.
+3. Metrics should be recorded for discussion.
+4. Commit the changes and create a PR for the changes in YOUR OWN
+   repository.
 
 ### 5. Interaction
 
-Create a form that can create new tickets
+It seems it is hard for agents in ACME to keep track of changes within
+a company itself. They need a way to keep context as long as the company
+is being managed by ACME.
+
+Perhaps if we can add a way for agents to take notes, it would be easier
+for them to keep track of changes.
+
+**Instruction**
+
+1. Create a new endpoint that allows agents to add notes to a company.
+2. The endpoint should accept the following:
+   ```
+   {
+       "companyId": 123,
+       "note": "This is a note",
+       "createdBy": "userId",
+       "createdAt": "2023-10-01T00:00:00Z"
+   }
+   ```
+3. Create a new form that allows agents to add notes to a company.
+4. Create a new page that allows agents to view all notes for a company.
+
+**Acceptance**
+
+1. The endpoint should be able to accept the request and store the note
+   in the database safely.
+2. The UI should have some sort of validation.
+3. The UI should be able to prevent abuse.
+4. Commit the changes and create a PR for the changes in YOUR OWN
+   repository.
 
 ## Stretch Tasks
 
@@ -142,3 +188,14 @@ best-practice tasks that you can make in any node project.
 
 Doing more than what is given above will be plus points and will be
 considered in our code review session.
+
+Here are some of the topics you can consider:
+
+- [ ]  Code Quality
+- [ ]  Fixing Subtle Errors
+- [ ]  Using Tests
+- [ ]  Using Typescript or Using Types
+- [ ]  Security Considerations
+- [ ]  Performance Considerations
+- [ ]  Use Component Systems
+- [ ]  Commit Convention
