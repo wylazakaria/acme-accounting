@@ -6,16 +6,18 @@ adopting an existing codebase.
 
 ---
 
-There are 5 tasks that you need to do to complete this task, at least
-3 tasks must be done for you to move forward.
+There are 5 tasks that you need to do to complete this task, all 5 
+tasks must be done for you to move forward.
 
-You are allowed to refactor as much as you want. However, Be mindful 
-of your time.
+Keep this whole exercise within 1 hour of your time. You are allowed
+to refactor as much as you want. However, Be mindful of your time.
+
+Keep things elegant, but as simple as possible.
 
 If there are any issues, contact your hiring representative and they 
 will clarify it with you.
 
-If you want to use AI/LLM, **DISCLOSE** where and how you used it.
+If you are to use AI/LLM, **DISCLOSE** where and how you used it.
 
 ## Context
 
@@ -79,7 +81,7 @@ Set up the codebase based on industry standard conventions.
 This service is old, new business requirements have come in and it
 requires us to change the internals of the service.
 
-Let's start with fixing the behaviour of the service.
+Let's generate with fixing the behaviour of the service.
 
 **Instructions**
 
@@ -141,6 +143,8 @@ time to get the results. Maybe this is a good time to refactor the code.
    is marginally faster.
 2. The endpoint should not hold the connection of the client while processing
    the data in the background.
+3. We are looking for performance, not accuracy. If you see numbers not 
+   tallying correctly in the report, you may skip it.
 
 **Acceptance**
 
