@@ -34,10 +34,12 @@ Every ticket has
 
 **Endpoints**
 
-- `GET api/v1/tickets` - returns all tickets in the system. Without 
-                         pagination. This is only for creating logic 
-                         testing.
-- `POST api/v1/tickets` - creates a ticket. It accepts type and `companyId`
+- `GET  api/v1/tickets`    - returns all tickets in the system. Without 
+                             pagination. This is only for creating logic 
+                             testing.
+- `POST api/v1/tickets`    - creates a ticket. It accepts type and `companyId`
+- `GET  api/v1/report`     - starts the processing of existing data and
+                             builds a report.        
 
 **Ticket Creation Rules**
 
@@ -68,7 +70,7 @@ Set up the codebase based on industry standard conventions.
 
 1. Service should run when you use `npm run dev`.
 2. Once everything is set up, you should be able to receive `{ "OK": true }` 
-   when you access http://localhost:1337/healthcheck.
+   when you access http://localhost:1337/api/v1/healthcheck.
 3. Commit the changes that allowed #2 to work and create a PR for the 
    changes in YOUR OWN repository.
 
@@ -89,8 +91,9 @@ Let's start with fixing the behaviour of the service.
 
 **Acceptance**
 
-1. Each requirement should have an accompanying test
-2. Commit the changes and create a PR for the changes in YOUR OWN 
+1. Each requirement should have an accompanying test.
+2. Include the HTTP requests you used to test in the code base.
+3. Commit the changes and create a PR for the changes in YOUR OWN 
    repository.
 
 ### 3. Schema
@@ -119,7 +122,8 @@ this case before. Maybe it's time to add another type of ticket.
 1. The ticket type should be usable by other engineers when setting up
    this service.
 2. Accompanying tests should be available to accommodate the side effects.
-3. Commit the changes and create a PR for the changes in YOUR OWN
+3. Include the HTTP requests you used to test in the code base.
+4. Commit the changes and create a PR for the changes in YOUR OWN
    repository.
 
 ### 4. Optimize
@@ -177,7 +181,8 @@ for them to keep track of changes.
    in the database safely.
 2. The UI should have some sort of validation.
 3. The UI should be able to prevent abuse.
-4. Commit the changes and create a PR for the changes in YOUR OWN
+4. Include the HTTP requests you used to test in the code base.
+5. Commit the changes and create a PR for the changes in YOUR OWN
    repository.
 
 ## Stretch Tasks
