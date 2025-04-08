@@ -26,20 +26,20 @@ We have `companies`, companies have `users`.
 Every user has a `role`, which defines what this user does in the 
 company. There might be multiple users with the same role.
 
-We create and assign `tickets` to users.
+We create `tickets` in a company and assign them to users.
 
 Every ticket has
 1. Type - defines the work that should be done by the user
 2. Single assignee - the user
 3. Category - every type is under a particular category
-4. Status: open or resolved
+4. Status - open or resolved
 
 **Endpoints**
 
 - `GET  api/v1/tickets`    - returns all tickets in the system. Without 
                              pagination. This is only for creating logic 
                              testing.
-- `POST api/v1/tickets`    - creates a ticket. It accepts type and `companyId`
+- `POST api/v1/tickets`    - creates a ticket. It accepts `type` and `companyId`
 - `GET  api/v1/report`     - starts the processing of existing data and
                              builds a report.        
 
@@ -58,25 +58,12 @@ If we cannot find an assignee with the required role, throw an error.
 
 ## Tasks
 
-### 1. Setup
+Before working on tasks please clone the repo to your own GitHub account
 
-This directory is not set up properly. Explore the code base and create
-a mental model of where things are. Based on your expertise with node.js,
-Set up the codebase based on industry standard conventions.
+When done commit the changes and create a PR for the changes in YOUR OWN
+repository. Send us a link for review.
 
-**Instructions**
-
-1. Modify the codebase so that it starts.
-
-**Acceptance**
-
-1. Service should run when you use `npm run dev`.
-2. Once everything is set up, you should be able to receive `{ "OK": true }` 
-   when you access http://localhost:1337/api/v1/healthcheck.
-3. Commit the changes that allowed #2 to work and create a PR for the 
-   changes in YOUR OWN repository.
-
-### 2. Behaviour
+### 1. Change requests
 
 This service is old, new business requirements have come in and it
 requires us to change the internals of the service.
@@ -91,14 +78,7 @@ Let's generate with fixing the behaviour of the service.
    ticket and we cannot find a secretary, assign it to the `Director`. 
    If there are multiple directors, throw an error.
 
-**Acceptance**
-
-1. Each requirement should have an accompanying test.
-2. Include the HTTP requests you used to test in the code base.
-3. Commit the changes and create a PR for the changes in YOUR OWN 
-   repository.
-
-### 3. Schema
+### 2. New ticket
 
 It seems that companies are closing down more than usual, we never considered
 this case before. Maybe it's time to add another type of ticket.
@@ -119,16 +99,7 @@ this case before. Maybe it's time to add another type of ticket.
 - Resolve all other active tickets in this company (we do not need 
   them anymore as we are closing down the company).
 
-**Acceptance**
-
-1. The ticket type should be usable by other engineers when setting up
-   this service.
-2. Accompanying tests should be available to accommodate the side effects.
-3. Include the HTTP requests you used to test in the code base.
-4. Commit the changes and create a PR for the changes in YOUR OWN
-   repository.
-
-### 4. Optimize
+### 3. Optimize
 
 ACME processes tons of data every day. It is essential for us that we
 make sure that our internal processes and data are provided accurately
@@ -152,8 +123,6 @@ time to get the results. Maybe this is a good time to refactor the code.
 2. Documents should process in the background and the client should be able
    to check the status of the processing.
 3. Metrics should be recorded for discussion.
-4. Commit the changes and create a PR for the changes in YOUR OWN
-   repository.
 
 ## Stretch Tasks
 
@@ -169,8 +138,55 @@ Here are some of the topics you can consider:
 - [ ]  Code Quality
 - [ ]  Fixing Subtle Errors
 - [ ]  Using Tests
-- [ ]  Using Typescript or Using Types
-- [ ]  Security Considerations
 - [ ]  Performance Considerations
-- [ ]  Use Component Systems
-- [ ]  Commit Convention
+
+# Project setup and run
+
+1. NPM
+```sh
+$ nvm use
+$ npm install
+```
+
+2. Run the DB container
+```sh
+docker-compose up -d
+```
+
+3. Run migrations
+```sh
+npm run db:migrate
+```
+
+4. Start the server
+```sh
+npm start
+```
+
+5. Go to http://localhost:3000/api/v1/healthcheck 🍾
+
+# Testing
+We use the integration tests instead of a unit ones for controllers.
+It means we do not mock db requests but perform them on a test db.
+
+To run tests:
+
+1.Run the DB container (if you did not before)
+```sh
+docker-compose up -d
+```
+
+2.Create a db
+```sh
+npm run db:create:test
+```
+
+3. Run migrations
+```sh
+npm run db:migrate:test
+```
+
+4. Test
+```sh
+npm test
+```
