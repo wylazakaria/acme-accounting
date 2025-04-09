@@ -6,7 +6,7 @@ adopting an existing codebase.
 
 ---
 
-There are 4 tasks that you need to do to complete this task, all 4 
+There are 3 tasks that you need to do to complete this task, all 4 
 tasks must be done for you to move forward.
 
 Keep this whole exercise within 1 hour of your time. You are allowed
