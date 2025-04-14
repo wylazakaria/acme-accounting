@@ -74,8 +74,8 @@ Let's generate with fixing the behaviour of the service.
 
 1. When creating a `registrationAddressChange` ticket, if the company 
    already has a ticket with this type, throw a duplication error.
-2. Add a new `Director` user. If we create a `registrationAddressChange`
-   ticket and we cannot find a secretary, assign it to the `Director`. 
+2. Add a new `Director` user role. If we create a `registrationAddressChange`
+   ticket, and we cannot find a corporate secretary, assign it to the `Director`. 
    If there are multiple directors, throw an error.
 
 ### 2. New ticket
