@@ -14,11 +14,21 @@ export class ReportsController {
     };
   }
 
-  @Post()
+  @Post('accounts')
   @HttpCode(201)
-  generate() {
+  async accounts() {
     this.reportsService.accounts();
+    return { message: 'finished' };
+  }
+
+  @Post('yearly')
+  async yearly() {
     this.reportsService.yearly();
+    return { message: 'finished' };
+  }
+
+@Post('fs')
+  async fs() {
     this.reportsService.fs();
     return { message: 'finished' };
   }
