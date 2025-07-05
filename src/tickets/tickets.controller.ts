@@ -1,4 +1,4 @@
-import { Body, ConflictException, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, ConflictException, Controller, Get, Post } from '@nestjs/common';
 import { Company } from '../../db/models/Company';
 import {
   Ticket,
@@ -38,31 +38,25 @@ export class TicketsController {
         ? TicketCategory.accounting
         : TicketCategory.corporate;
 
-    const userRole =
-      type === TicketType.managementReport
-        ? UserRole.accountant
-        : UserRole.corporateSecretary;
+    const assignee = await this.findAssignee(companyId, type);
 
-    const assignees = await User.findAll({
-      where: { companyId, role: userRole },
-      order: [['createdAt', 'DESC']],
-    });
-
-    if (!assignees.length)
-      throw new ConflictException(
-        `Cannot find user with role ${userRole} to create a ticket`,
-      );
-
-    if (userRole === UserRole.corporateSecretary && assignees.length > 1)
-      throw new ConflictException(
-        `Multiple users with role ${userRole}. Cannot create a ticket`,
-      );
-
-    const assignee = assignees[0];
+    if (type === TicketType.registrationAddressChange) {
+      const existingTicket = await Ticket.findOne({
+        where: {
+          type: TicketType.registrationAddressChange,
+          companyId: companyId,
+          status : TicketStatus.open
+        }
+      });
+      
+      if (existingTicket) {
+        throw new ConflictException(`Duplicate ${TicketType.registrationAddressChange} ticket exist`);
+      }
+    }
 
     const ticket = await Ticket.create({
       companyId,
-      assigneeId: assignee.id,
+      assigneeId: assignee!!.id,
       category,
       type,
       status: TicketStatus.open,
@@ -79,4 +73,56 @@ export class TicketsController {
 
     return ticketDto;
   }
-}
+
+  private async findAssignee(companyId: number, type: TicketType) : Promise<User | null> {
+    if (type === TicketType.managementReport) {
+      const accountant = await this.findSingleUser(companyId, UserRole.accountant);
+      if(!accountant) {
+        throw new ConflictException(
+            `Cannot find assignee for ${type}`
+          );
+      }
+      return accountant;
+    } 
+      
+    const secretaries = await this.findUser(companyId, UserRole.corporateSecretary);
+      
+      if (!secretaries || secretaries.length === 0) {
+        const directors = await this.findUser(companyId, UserRole.director);
+        
+        if (!directors || directors.length === 0) {
+          throw new ConflictException(
+            `Cannot find assignee for ${type}`
+          );
+        }
+        
+        return this.validateSingleAssignee(directors, type);
+      } 
+      
+      return this.validateSingleAssignee(secretaries, type);
+    }
+    
+    async findSingleUser(companyId: number, userRole: UserRole): Promise<User | null>  {
+      return await User.findOne({
+        where: { companyId, role: userRole},
+        order: [['createdAt', 'DESC']],
+      });
+    }
+
+    async findUser(companyId : number, userRole: UserRole) : Promise<User[] | null> {
+      return await User.findAll({
+        where: { companyId, role: userRole},
+        order: [['createdAt', 'DESC']],
+      });
+    }
+
+    validateSingleAssignee(users: User[], type: TicketType) : User {
+      if (users.length > 1) {
+        throw new ConflictException (
+          `Duplicate Assignee for ${type} tickets`
+        );
+      }
+      return users[0];
+    }
+  }
+
